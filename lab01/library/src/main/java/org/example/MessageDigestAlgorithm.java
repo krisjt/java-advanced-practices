@@ -1,13 +1,13 @@
 package org.example;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Objects;
+import java.util.Scanner;
 
 public class MessageDigestAlgorithm {
 
@@ -58,9 +58,25 @@ public class MessageDigestAlgorithm {
         return result.toString();
     }
 
-    public boolean isEqual(String filepath1, String filepath2) throws NoSuchAlgorithmException {
-        String hash2 = getHash(filepath2);
-        String hash1 = getHash(filepath1);
+    public boolean isEqual(String filepath1, String filepath2) throws NoSuchAlgorithmException, IOException {
+        String hash2;
+        String hash1;
+
+        String extension1 = null;
+        String extension2 = null;
+
+        int slashIndex1 = filepath1.lastIndexOf('.');
+        int slashIndex2 = filepath2.lastIndexOf('.');
+
+        if (slashIndex1 > 0 && slashIndex2 > 0) {
+            extension1 = filepath1.substring(slashIndex1);
+            extension2 = filepath2.substring(slashIndex2);
+        }
+
+        if(Objects.equals(extension1, ".md5"))hash1 = getMD5FromFile(filepath1);
+        else hash1 = getHash(filepath1);
+        if(Objects.equals(extension2, ".md5"))hash2 = getMD5FromFile(filepath2);
+        else hash2 = getHash(filepath2);
 
         System.out.println(hash2);
         System.out.println(hash1);
@@ -68,4 +84,16 @@ public class MessageDigestAlgorithm {
         return hash1.equals(hash2);
     }
 
+
+    private String getMD5FromFile(String filepath) throws IOException {
+        File file = new File(filepath);
+        String data = null;
+        Scanner myReader = new Scanner(file);
+        while (myReader.hasNextLine()) {
+            data = myReader.nextLine();
+            System.out.println(data);
+        }
+        myReader.close();
+        return data;
+    }
 }
