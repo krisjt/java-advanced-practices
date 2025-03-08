@@ -28,7 +28,6 @@ public class MessageDigestAlgorithm {
                 byte[] buffer = new byte[1024];
                 while (dis.read(buffer) != -1) {}
             } catch ( IOException exception) {
-                System.out.println("An issue occurred: ");
                 exception.printStackTrace();
             }
 
@@ -47,6 +46,7 @@ public class MessageDigestAlgorithm {
         }
 
         byte[] hash = md.digest();
+        System.out.println(filepath + " hash is " + hex(hash));
         return hex(hash);
     }
 
@@ -68,18 +68,16 @@ public class MessageDigestAlgorithm {
         int slashIndex1 = filepath1.lastIndexOf('.');
         int slashIndex2 = filepath2.lastIndexOf('.');
 
-        if (slashIndex1 > 0 && slashIndex2 > 0) {
+        if (slashIndex1 > 0)
             extension1 = filepath1.substring(slashIndex1);
+
+        if (slashIndex2 > 0)
             extension2 = filepath2.substring(slashIndex2);
-        }
 
         if(Objects.equals(extension1, ".md5"))hash1 = getMD5FromFile(filepath1);
         else hash1 = getHash(filepath1);
         if(Objects.equals(extension2, ".md5"))hash2 = getMD5FromFile(filepath2);
         else hash2 = getHash(filepath2);
-
-        System.out.println(hash2);
-        System.out.println(hash1);
 
         return hash1.equals(hash2);
     }
@@ -91,7 +89,6 @@ public class MessageDigestAlgorithm {
         Scanner myReader = new Scanner(file);
         while (myReader.hasNextLine()) {
             data = myReader.nextLine();
-            System.out.println(data);
         }
         myReader.close();
         return data;

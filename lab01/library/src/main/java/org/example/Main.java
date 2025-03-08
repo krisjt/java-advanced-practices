@@ -49,12 +49,6 @@ public class Main {
                     if (messageDigestAlgorithm.isEqual(filepath1, filepath2)) System.out.println("Files are equal.");
                     else System.out.println("Files ain't equal.");
                 }
-                case "4" -> {
-                    System.out.println("Please enter path to a file u want to zip: ");
-                    Scanner scanner2 = new Scanner(System.in);
-                    String filename = scanner2.nextLine();
-//                    messageDigestAlgorithm.compareMD5(filename);
-                }
                 default -> {
                     System.out.println("Exiting...");
                     System.exit(0);
