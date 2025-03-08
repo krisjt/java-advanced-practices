@@ -7,7 +7,7 @@ Aplikację powinno dać się uruchomić z linii komend, korzystając tylko z wyg
 
 ## Przygotowanie środowiska uruchomieniowego
 
-## Kompilacja kodu z wykorzystaniem java compiler
+### Kompilacja kodu z wykorzystaniem java compiler
 `javac -p module/bin -d outdir/ gui/src/main/java/**/*.java `
 
 - `-p` określa ścieżkę modułów wymaganych do kompilacji, każdy z nich rozdzileony jest ":"
@@ -17,7 +17,7 @@ Aplikację powinno dać się uruchomić z linii komend, korzystając tylko z wyg
 > [!tip]
 > Do określenia zależności aplikacji warto wykorzystać komendę `jdeps`. 
 
-## Tworzenie JRE (Java Runtime Environment)
+### Tworzenie JRE (Java Runtime Environment)
 
 `link --module-path lab01/outdir:/lab01/modul2/bin --add-modules library,com.example.gui --output outJRE --launcher start=com.example.gui/com.example.gui.HomePage`
 
