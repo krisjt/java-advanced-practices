@@ -10,7 +10,7 @@ Aplikację powinno dać się uruchomić z linii komend, korzystając tylko z wyg
 ### Kompilacja kodu z wykorzystaniem java compiler
 `javac -p module/bin -d outdir/ gui/src/main/java/**/*.java `
 
-- `-p` określa ścieżkę modułów wymaganych do kompilacji, każdy z nich rozdzileony jest ":"
+- `-p` określa ścieżkę modułów wymaganych do kompilacji, każda z nich rozdzielona jest przez ":"
 - `-d` destination określa katalog docelowy
 - `gui/src/main/java/**/*.java` określa ścieżki do źródeł
 
@@ -18,7 +18,7 @@ Aplikację powinno dać się uruchomić z linii komend, korzystając tylko z wyg
 
 ### Tworzenie JRE (Java Runtime Environment)
 
-`link --module-path lab01/outdir:/lab01/modul2/bin --add-modules library,com.example.gui --output outJRE --launcher start=com.example.gui/com.example.gui.HomePage`
+`jlink --module-path lab01/outdir:/lab01/modul2/bin --add-modules library,com.example.gui --output outJRE --launcher start=com.example.gui/com.example.gui.HomePage`
 
 - `--module-path` określa lokalizację modułów
 - `--add-modules` określa, które moduły aplikacji zostaną uwzględnione w JRE
