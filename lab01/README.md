@@ -14,7 +14,7 @@ Aplikację powinno dać się uruchomić z linii komend, korzystając tylko z wyg
 - `-d` destination określa katalog docelowy
 - `gui/src/main/java/**/*.java` określa ścieżki do źródeł
 
-> [!tip]
+[!tip]
 > Do określenia zależności aplikacji warto wykorzystać komendę `jdeps`. 
 
 ### Tworzenie JRE (Java Runtime Environment)
