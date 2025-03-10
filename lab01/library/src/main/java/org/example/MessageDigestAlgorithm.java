@@ -50,7 +50,7 @@ public class MessageDigestAlgorithm {
         return hex(hash);
     }
 
-    public static String hex(byte[] bytes) {
+    private static String hex(byte[] bytes) {
         StringBuilder result = new StringBuilder();
         for (byte aByte : bytes) {
             result.append(String.format("%02x", aByte));

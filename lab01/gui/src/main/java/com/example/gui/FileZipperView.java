@@ -96,7 +96,6 @@ class FileZipperView {
                 if (slashIndex > 0) {
                     noExtension = noExtension.substring(0,slashIndex);
                 }
-                System.out.println(noExtension);
                 zipper.unzipFile(noExtension+"/unpacked", chosenFilePath);
                 if (currentDirectory != null) {
                     listFiles(currentDirectory);

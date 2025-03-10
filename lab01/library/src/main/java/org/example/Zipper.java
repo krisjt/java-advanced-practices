@@ -7,11 +7,7 @@ import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 public class Zipper {
-    private final MessageDigestAlgorithm messageDigestAlgorithm;
-
-    public Zipper() {
-        this.messageDigestAlgorithm = new MessageDigestAlgorithm();
-    }
+    private final MessageDigestAlgorithm messageDigestAlgorithm = new MessageDigestAlgorithm();
 
     public void zip(File fileToZip, String fileName) throws IOException, NoSuchAlgorithmException {
 
@@ -81,7 +77,6 @@ public class Zipper {
 
     public void unzipFile(String filepath, String filename) throws IOException {
 
-        //katalog do ktorego rozpakowane zosatnie
         String noExtension = filename;
         int slashIndex = noExtension.lastIndexOf('/');
         int dotIndex = noExtension.lastIndexOf('.');
@@ -89,8 +84,6 @@ public class Zipper {
             noExtension = noExtension.substring(slashIndex + 1, dotIndex);
         }
         filepath = filepath + "/" + noExtension;
-
-//        filepath = getFilenameNoExtension(filename);
 
         File destDir = new File(filepath);
 
@@ -122,7 +115,7 @@ public class Zipper {
         zis.close();
     }
 
-    public static File newFile(File destinationDir, ZipEntry zipEntry) throws IOException {
+    private static File newFile(File destinationDir, ZipEntry zipEntry) throws IOException {
         File destFile;
 
         if(zipEntry.isDirectory()){
