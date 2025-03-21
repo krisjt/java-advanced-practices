@@ -3,9 +3,10 @@ package pl.edu.pwr.models;
 import pl.edu.pwr.utlis.MeasurementReader;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class MeasurementFile {
-    private String filepath;
+    private final String filepath;
     private HashMap<String, Measurement> records;
     private boolean isInMemory;
 
@@ -16,23 +17,14 @@ public class MeasurementFile {
 
     private void fillMap(){
         MeasurementReader measurementReader = new MeasurementReader(filepath);
-        records = measurementReader.getMeasurementDataWeakHashMap();
+        records = measurementReader.getMeasurementDataHashMap();
     }
-
-    public String getFilepath() {
-        return filepath;
-    }
-
-    public void setFilepath(String filepath) {
-        this.filepath = filepath;
-    }
-
-    public HashMap<String, Measurement> getRecords(){
+    public Map<String, Measurement> getRecords(){
         return records;
     }
 
-    public HashMap<String,Measurement> getRecords(int first, int last){
-        HashMap<String,Measurement> measurementHashMap= new HashMap<>();
+    public Map<String,Measurement> getRecords(int first, int last){
+        Map<String,Measurement> measurementHashMap= new HashMap<>();
         for (int i = first; i <= last; i++) {
             if(records.containsKey(String.valueOf(i))) {
                 measurementHashMap.put(String.valueOf(i),records.get(String.valueOf(i)));
@@ -50,16 +42,11 @@ public class MeasurementFile {
             if (records.containsKey(String.valueOf(i))) {
                 Measurement value = records.get(String.valueOf(i));
                 content.append(String.format("%20s | %20s | %20s | %20s | %20s | %n",
-                        value.getId(), value.getHour(), value.getTemperature(),
-                        value.getHumidity(), value.getPressure()));
+                        value.id(), value.hour(), value.temperature(),
+                        value.humidity(), value.pressure()));
             }
         }
         return content.toString();
-    }
-
-
-    public void setRecords(HashMap<String, Measurement> records) {
-        this.records = records;
     }
 
     @Override

@@ -13,7 +13,7 @@ import pl.edu.pwr.providers.AtmosphericCSVProvider;
 import pl.edu.pwr.providers.IProvider;
 
 import java.io.File;
-import java.util.HashMap;
+import java.util.Map;
 
 public class FileViewerApp extends Application {
 
@@ -84,7 +84,7 @@ public class FileViewerApp extends Application {
         createTree(rootItem);
 
         TreeView<File> treeView = new TreeView<>(rootItem);
-        treeView.setCellFactory(param -> new TreeCell<File>() {
+        treeView.setCellFactory(param -> new TreeCell<>() {
             @Override
             protected void updateItem(File item, boolean empty) {
                 super.updateItem(item, empty);
@@ -127,24 +127,26 @@ public class FileViewerApp extends Application {
             displayFileRecords();
             displayStatistics();
         } catch (NumberFormatException e) {
-            handleNumberFormatException(e);
+            fileContentArea.setText("Invalid record numbers. Please enter valid integers.");
+            e.printStackTrace();
         } catch (Exception e) {
-            handleGenericException(e);
+            fileContentArea.setText("Error reading data.");
+            e.printStackTrace();
         }
     }
 
     private void updateInMemoryStatusDisplay() {
         if (provider.isInMemory()) {
             isInMemoryLabel.setText("File was in memory.");
-            isInMemoryLabel.setStyle("-fx-background-color: lightgreen; -fx-padding: 5px; -fx-border-radius: 5px;");
+            isInMemoryLabel.setStyle("-fx-background-color: lightblue; -fx-padding: 5px; -fx-border-radius: 5px;");
         } else {
             isInMemoryLabel.setText("File wasn't in memory. It was recovered from csv file.");
-            isInMemoryLabel.setStyle("-fx-background-color: lightcoral; -fx-padding: 5px; -fx-border-radius: 5px;");
+            isInMemoryLabel.setStyle("-fx-background-color: pink; -fx-padding: 5px; -fx-border-radius: 5px;");
         }
     }
 
     private void displayFileRecords() {
-        HashMap<String, Measurement> map = provider.getData();
+        Map<String, Measurement> map = provider.getData();
         int first = getFirstRecordNumber();
         int last = getLastRecordNumber(map.size());
 
@@ -167,7 +169,6 @@ public class FileViewerApp extends Application {
 
         String algorithmResult = algorithm.getResults();
         stats.append(algorithmResult);
-
         appendMemoryStatistics(stats);
 
         statsArea.setText(stats.toString());
@@ -185,13 +186,4 @@ public class FileViewerApp extends Application {
         stats.append(String.format("Free Memory: %d MB%n", freeMemory));
     }
 
-    private void handleNumberFormatException(NumberFormatException e) {
-        fileContentArea.setText("Invalid record numbers. Please enter valid integers.");
-        e.printStackTrace();
-    }
-
-    private void handleGenericException(Exception e) {
-        fileContentArea.setText("Error reading data.");
-        e.printStackTrace();
-    }
 }

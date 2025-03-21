@@ -1,11 +1,11 @@
 package pl.edu.pwr.providers;
 
 import java.io.File;
-import java.util.HashMap;
+import java.util.Map;
 
 public interface IProvider<T> {
-    HashMap<String, T> getData();
-    HashMap<String, T> getData(int first, int last);
+    Map<String, T> getData();
+    Map<String, T> getData(int first, int last);
     String getDataString(int first, int last);
     void setFile(File filepath);
     boolean isInMemory();
