@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class BookReader implements Reader<Book>{
+public class BookReader {
 
     private static final String URLPATH = "https://wolnelektury.pl/api/books/";
     private final List<Book> books;

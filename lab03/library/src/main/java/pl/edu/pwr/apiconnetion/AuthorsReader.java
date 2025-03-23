@@ -3,6 +3,7 @@ package pl.edu.pwr.apiconnetion;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import pl.edu.pwr.apiconnetion.models.Author;
+import pl.edu.pwr.service.Subject;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -14,21 +15,26 @@ import java.net.http.HttpResponse;
 import java.util.Collections;
 import java.util.List;
 
-public class AuthorsReader implements Reader<Author>{
+public class AuthorsReader implements Reader{
 
     private static final String URLPATH = "https://wolnelektury.pl/api/authors/";
+    private static final Subject TYPE = Subject.Author;
     private final List<Author> authors;
 
     public AuthorsReader() {
         this.authors = getData();
     }
 
-    public List<Author> getList() {
-        return authors;
+    public Integer getListSize() {
+        return authors.size();
     }
 
     public String getName(int id){
         return authors.get(id).name;
+    }
+
+    public Subject getType(){
+        return TYPE;
     }
 
     private List<Author> getData() {

@@ -3,6 +3,7 @@ package pl.edu.pwr.apiconnetion;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import pl.edu.pwr.apiconnetion.models.Genre;
+import pl.edu.pwr.service.Subject;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -14,9 +15,10 @@ import java.net.http.HttpResponse;
 import java.util.Collections;
 import java.util.List;
 
-public class GenreReader implements Reader<Genre>{
+public class GenreReader implements Reader{
 
     private static final String URLPATH = "https://wolnelektury.pl/api/genres/";
+    private static final Subject TYPE = Subject.Genre;
     private final List<Genre> genres;
 
     public GenreReader() {
@@ -26,9 +28,12 @@ public class GenreReader implements Reader<Genre>{
     public String getName(int id){
         return genres.get(id).getName();
     }
+    public Subject getType(){
+        return TYPE;
+    }
 
-    public List<Genre> getList() {
-        return genres;
+    public Integer getListSize() {
+        return genres.size();
     }
 
     private List<Genre> getData() {

@@ -3,7 +3,6 @@ package pl.edu.pwr.app;
 import pl.edu.pwr.apiconnetion.models.Question;
 import pl.edu.pwr.service.GuessingQuestion;
 import pl.edu.pwr.service.Language;
-import pl.edu.pwr.service.Subject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,9 +55,8 @@ public class QuizApp extends JFrame {
     private void initializeLanguage() {
         game = new GuessingQuestion(language);
         locale = new Locale(language.toString().toLowerCase(), language.toString());
-//        rb = ResourceBundle.getBundle("App", locale);
-        rb = ResourceBundle.getBundle("pl.edu.pwr.app.resource.App", locale);
-
+        rb = ResourceBundle.getBundle("App", locale);
+//        rb = ResourceBundle.getBundle("pl.edu.pwr.app.resource.App", locale);
     }
 
     private void updateLanguage(Language newLanguage) {
@@ -242,15 +240,23 @@ public class QuizApp extends JFrame {
 
     private void loadNextQuestion() {
         int question = Math.abs(random.nextInt() % 4);
+//        Map<String,Boolean> map = new HashMap<>();
+//        map.put("true1",true);
+//        map.put("true2",true);
+//        map.put("false1",false);
+//        map.put("false2",false);
         if (currentQuestionIndex == 0) currentQuestion = game.getNumberQuestion();
         else {
             switch (question) {
-                case 0 -> currentQuestion = game.getQuestion(Subject.Author);
-                case 1 -> currentQuestion = game.getQuestion(Subject.Kind);
-                case 2 -> currentQuestion = game.getQuestion(Subject.Genre);
+//                case 0 -> currentQuestion = game.getQuestion(Subject.Author);
+//                case 1 -> currentQuestion = game.getQuestion(Subject.Kind);
+//                case 2 -> currentQuestion = game.getQuestion(Subject.Genre);
                 default -> currentQuestion = game.getQuestionThreeGaps();
+//                default -> currentQuestion = new Question("cos",map);
             }
         }
+
+        System.out.println(currentQuestion);
 
         String questionText = currentQuestion.questionContent();
         questionLabel.setText("<html><div style='width: 650px; text-align: center;'>" + questionText + "</div></html>");
@@ -272,28 +278,22 @@ public class QuizApp extends JFrame {
         answersPanel.revalidate();
         answersPanel.repaint();
 
-        System.out.println(currentQuestion.answers());
     }
 
     private void checkAnswer() {
-        boolean hasCorrectAnswer = false;
-        int selectedCount = 0;
+        boolean hasCorrectAnswer = true;
 
-        for(int j = 0; j < answerCheckBoxes.length; j++){
-            if(answerCheckBoxes[j].isSelected())selectedCount++;
-        }
-
-        if(selectedCount < 2) {
-            for (int i = 0; i < answerCheckBoxes.length; i++) {
-                if (answerCheckBoxes[i].isSelected() && Boolean.TRUE.equals(currentQuestion.answers().get(answerCheckBoxes[i].getText()))) {
-                    hasCorrectAnswer = true;
-                    score++;
-                }
+        for (JCheckBox answerCheckBox : answerCheckBoxes) {
+            if ((answerCheckBox.isSelected() && Boolean.FALSE.equals(currentQuestion.answers().get(answerCheckBox.getText())))
+            || (!answerCheckBox.isSelected() && Boolean.TRUE.equals(currentQuestion.answers().get(answerCheckBox.getText())))){
+                hasCorrectAnswer = false;
+                break;
             }
         }
 
         if (hasCorrectAnswer) {
             answersPanel.setBackground(Color.GREEN);
+            score++;
         } else {
             answersPanel.setBackground(Color.RED);
         }

@@ -1,9 +1,15 @@
 package pl.edu.pwr.apiconnetion.models;
 
+import com.google.gson.annotations.JsonAdapter;
+import pl.edu.pwr.apiconnetion.AuthorDeserializer;
+
+import java.util.List;
+
 public class Book {
     public String title;
     public String genre;
-    public String author;
+    @JsonAdapter(AuthorDeserializer.class)
+    public List<String> author;
     public String kind;
     public String epoch;
 

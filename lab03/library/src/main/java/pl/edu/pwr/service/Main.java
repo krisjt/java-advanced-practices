@@ -13,10 +13,10 @@ public class Main {
 //        wypelnianieFormatow();
 //        GenreReader genreReader = new GenreReader();
 //        System.out.println(genreReader.getKinds());
-//        GuessingQuestion guessingQuestion = new GuessingQuestion(Language.LV);
-//        System.out.println(guessingQuestion.getQuestion(Subject.Genre));
+        GuessingQuestion guessingQuestion = new GuessingQuestion(Language.LV);
+        System.out.println(guessingQuestion.getQuestion(Subject.Genre));
 //        GuessingQuestion genreQuestion = new GuessingQuestion(Language.EN);
-//        System.out.println(genreQuestion.getQuestion(Subject.Author));
+        System.out.println(guessingQuestion.getQuestion(Subject.Author));
         GuessingQuestion guessingQuestion2 = new GuessingQuestion(Language.PL);
 //        System.out.println(guessingQuestion2.getQuestion(Subject.Author));
 //        GuessingQuestion guessingQuestion3 = new GuessingQuestion(Language.EN);
@@ -51,5 +51,7 @@ public class Main {
         String output = mf.format(arguments);
         System.out.println(output);
     }
+
+
 
 }
