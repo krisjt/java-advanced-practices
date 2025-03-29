@@ -13,11 +13,11 @@ public class Main {
 //        wypelnianieFormatow();
 //        GenreReader genreReader = new GenreReader();
 //        System.out.println(genreReader.getKinds());
-        GuessingQuestion guessingQuestion = new GuessingQuestion(Language.LV);
-        System.out.println(guessingQuestion.getQuestion(Subject.Genre));
+        QuestionManager questionManager = new QuestionManager(Language.PL);
+        System.out.println(questionManager.getQuestion(Subject.Genre));
 //        GuessingQuestion genreQuestion = new GuessingQuestion(Language.EN);
-        System.out.println(guessingQuestion.getQuestion(Subject.Author));
-        GuessingQuestion guessingQuestion2 = new GuessingQuestion(Language.PL);
+        System.out.println(questionManager.getQuestion(Subject.Author));
+        QuestionManager questionManager2 = new QuestionManager(Language.PL);
 //        System.out.println(guessingQuestion2.getQuestion(Subject.Author));
 //        GuessingQuestion guessingQuestion3 = new GuessingQuestion(Language.EN);
 //        System.out.println(guessingQuestion3.getQuestion(Subject.Genre));
@@ -27,7 +27,7 @@ public class Main {
 //        GuessingQuestion guessingQuestion5 = new GuessingQuestion(Language.EN);
 //        System.out.println(guessingQuestion5.getQuestion(Subject.Kind));
 //        System.out.println(guessingQuestion2.getQuestionThreeGaps());
-        System.out.println(guessingQuestion2.getNumberQuestion());
+        System.out.println(questionManager2.getNumberQuestion());
     }
 
     private static void wypelnianieFormatow(){
