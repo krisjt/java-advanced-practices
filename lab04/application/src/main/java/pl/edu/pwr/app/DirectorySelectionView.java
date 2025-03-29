@@ -71,13 +71,9 @@ public class DirectorySelectionView {
                 JOptionPane.showMessageDialog(panel,
                         "Proszę wprowadzić nazwę pakietu przed kontynuacją",
                         "Błąd", JOptionPane.WARNING_MESSAGE);
-            } else if (!isValidPackageName(packageName)) {
-                JOptionPane.showMessageDialog(panel,
-                        "Nieprawidłowa nazwa pakietu. Powinna składać się tylko z małych liter i kropek (np. com.example.myapp)",
-                        "Błąd", JOptionPane.WARNING_MESSAGE);
             } else {
                 frame.dispose();
-                new ObjectsWindow(selectedDirectory, packageName);
+                new ProcessorsView(selectedDirectory, packageName);
             }
         });
 
@@ -89,10 +85,6 @@ public class DirectorySelectionView {
 
         frame.add(panel);
         frame.setVisible(true);
-    }
-
-    private boolean isValidPackageName(String packageName) {
-        return packageName.matches("^([a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)*)$");
     }
 
     public static void main(String[] args) {

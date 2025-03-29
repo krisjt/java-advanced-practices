@@ -17,21 +17,21 @@ import java.util.stream.Stream;
 
 public class ClassManager {
 
-    private final static String CUSTOM_MODULE_LOCATION = "/Users/krystynanowak/Desktop/Studia/Semestr6/JavaTechnikiZaawansowane/272890_javatz_2025/lab04/library/target/classes/";
     private final static String CUSTOM_MODULE_NAME = "library";
-    private final String classesPath = "/Users/krystynanowak/Desktop/Studia/Semestr6/JavaTechnikiZaawansowane/272890_javatz_2025/lab04/library/target/classes/pl/edu/pwr/processors";
     private CustomClassLoader customClassLoader;
+    private Path moduleLocation;
+    private String packageName;
 
-    public ClassManager() {
-//        customClassLoader = new CustomClassLoader();
+    public ClassManager(String classPackageName, Path moduleLocation) {
+        this.moduleLocation = moduleLocation;
+        this.packageName = classPackageName;
+        this.customClassLoader = new CustomClassLoader(classPackageName,getClassesPath());
     }
 
     private ModuleLayer getModuleLayer() {
         Set<String> rootModules = Set.of("library");
 
-        Path path = Paths.get(CUSTOM_MODULE_LOCATION);
-
-        ModuleFinder beforeFinder = ModuleFinder.of(path);
+        ModuleFinder beforeFinder = ModuleFinder.of(moduleLocation);
         ModuleLayer parent = ModuleLayer.boot();
 
         Configuration config = parent.configuration().resolve(beforeFinder, ModuleFinder.of(), rootModules);
@@ -43,7 +43,7 @@ public class ClassManager {
 
     public List<Class<Processor>> getProcessors(){
         List<Class<Processor>> processors = new ArrayList<>();
-        try (Stream<Path> stream = Files.walk(Path.of(classesPath), 1)) {
+        try (Stream<Path> stream = Files.walk(getClassesPath(), 1)) {
             stream.forEach(path -> {
                 if (!path.toFile().isDirectory()) {
                     try {
@@ -60,6 +60,10 @@ public class ClassManager {
             throw new RuntimeException(e);
         }
         return processors;
+    }
+
+    private Path getClassesPath(){
+        return Paths.get(moduleLocation.toString() + "/" + packageName.replaceAll("\\.","/"));
     }
 
 

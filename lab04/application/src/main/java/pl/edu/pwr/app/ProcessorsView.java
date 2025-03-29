@@ -1,5 +1,6 @@
 package pl.edu.pwr.app;
 
+import pl.edu.pwr.app.modules.ClassManager;
 import pl.edu.pwr.service.CustomStatusListener;
 import pl.edu.pwr.service.ProcessManager;
 import pl.edu.pwr.service.Processor;
@@ -15,9 +16,10 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class ObjectsWindow {
+public class ProcessorsView {
     private JFrame frame;
     private CustomClassLoader customClassLoader;
+    private ClassManager classManager;
     private List<Processor> processorInstances;
     private JList<Processor> objectsList;
     private JLabel infoLabel;
@@ -31,10 +33,11 @@ public class ObjectsWindow {
     private String packageName;
     private JTextField taskField;
 
-    public ObjectsWindow(File selectedDirectory, String packageName) {
+    public ProcessorsView(File selectedDirectory, String packageName) {
         this.selectedDirectory = selectedDirectory;
         this.packageName = packageName;
-        this.customClassLoader = new CustomClassLoader(packageName, selectedDirectory.toPath());
+//        this.customClassLoader = new CustomClassLoader(packageName, selectedDirectory.toPath());
+        this.classManager = new ClassManager(packageName, selectedDirectory.toPath());
         this.processorInstances = new ArrayList<>();
 
         initializeFrame(selectedDirectory.getName());
@@ -63,7 +66,8 @@ public class ObjectsWindow {
     private void loadProcessors() {
         try {
             try {
-                List<Class<Processor>> processorClasses = customClassLoader.loadProcessorsFromFile();
+//                List<Class<Processor>> processorClasses = customClassLoader.loadProcessorsFromFile();
+                List<Class<Processor>> processorClasses = classManager.getProcessors();
                 processorInstances.clear();
                 statusListener.clearStatusMap();
 
@@ -234,7 +238,11 @@ public class ObjectsWindow {
     }
 
     private void reloadProcessors() {
-        this.customClassLoader = new CustomClassLoader(
+//        this.customClassLoader = new CustomClassLoader(
+//                packageName,
+//                selectedDirectory.toPath()
+//        );
+        this.classManager = new ClassManager(
                 packageName,
                 selectedDirectory.toPath()
         );
@@ -249,10 +257,12 @@ public class ObjectsWindow {
         new DirectorySelectionView(text);
     }
     private void unloadProcessors() {
-//        processorInstances.clear();
-//        statusMap.clear();
-//        customClassLoader = null;
-//        System.gc();
-//        openMainFrame("You've unloaded classes.");
+        statusListener.clearStatusMap();
+        ProcessManager.getInstance().clearRunningProcessors();
+        loadProcessors();
+        statusMap.clear();
+        classManager = null;
+        System.gc();
+        openMainFrame("You've unloaded classes.");
     }
 }
