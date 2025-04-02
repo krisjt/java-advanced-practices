@@ -5,13 +5,13 @@ import java.awt.*;
 import java.io.File;
 
 public class DirectorySelectionView {
-    private JFrame frame;
+    private final JFrame frame;
     private File selectedDirectory;
-    private JTextField packageNameField;
+    private final JTextField packageNameField;
 
     public DirectorySelectionView(String text) {
         frame = new JFrame("Wybór katalogu");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(800, 400);
         frame.setLocationRelativeTo(null);
 

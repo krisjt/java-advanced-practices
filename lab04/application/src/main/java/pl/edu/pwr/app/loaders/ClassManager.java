@@ -1,6 +1,5 @@
-package pl.edu.pwr.app.modules;
+package pl.edu.pwr.app.loaders;
 
-import pl.edu.pwr.app.CustomClassLoader;
 import pl.edu.pwr.service.Processor;
 
 import java.io.IOException;
@@ -17,10 +16,9 @@ import java.util.stream.Stream;
 
 public class ClassManager {
 
-    private final static String CUSTOM_MODULE_NAME = "library";
-    private CustomClassLoader customClassLoader;
-    private Path moduleLocation;
-    private String packageName;
+    private final CustomClassLoader customClassLoader;
+    private final Path moduleLocation;
+    private final String packageName;
 
     public ClassManager(String classPackageName, Path moduleLocation) {
         this.moduleLocation = moduleLocation;
@@ -35,8 +33,6 @@ public class ClassManager {
         ModuleLayer parent = ModuleLayer.boot();
 
         Configuration config = parent.configuration().resolve(beforeFinder, ModuleFinder.of(), rootModules);
-        CustomClassLoader customClassLoader = new CustomClassLoader("pl.edu.pwr.processors", Paths.get("/Users/krystynanowak/Desktop/Studia/Semestr6/JavaTechnikiZaawansowane/272890_javatz_2025/lab04/library/target/classes/pl/edu/pwr/processors"));
-
 
         return ModuleLayer.boot().defineModulesWithOneLoader(config, customClassLoader);
     }
@@ -50,14 +46,13 @@ public class ClassManager {
                         Class<?> objectClass = getModuleLayer().findLoader("library").loadClass(path.getFileName().toString());
                         if(Arrays.stream(objectClass.getInterfaces()).findAny().orElseThrow()== Processor.class)
                             processors.add((Class<Processor>) objectClass);
-
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
                 }
             });
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Error: " + e.getMessage());
         }
         return processors;
     }

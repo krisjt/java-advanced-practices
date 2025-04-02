@@ -1,22 +1,16 @@
 package pl.edu.pwr.app;
 
-import pl.edu.pwr.app.modules.ClassManager;
+import pl.edu.pwr.app.loaders.ClassManager;
 import pl.edu.pwr.service.CustomStatusListener;
 import pl.edu.pwr.service.Processor;
-import pl.edu.pwr.service.StatusListener;
 
-import java.lang.reflect.Method;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Main {
 
-    final static String CUSTOM_MODULE_LOCATION = ".";
-    final static String CUSTOM_MODULE_NAME = "library";
-    final static String CUSTOM_CLASS_NAME = "pl.edu.pwr.processors.CsvSumProcessor";
     public static void main(String[] args) throws Exception {
 
         ClassManager classManager = new ClassManager("pl.edu.pwr.processors",Paths.get("/Users/krystynanowak/Desktop/Studia/Semestr6/JavaTechnikiZaawansowane/272890_javatz_2025/lab04/library/target/classes"));

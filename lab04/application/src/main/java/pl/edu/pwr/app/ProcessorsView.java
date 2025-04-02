@@ -1,6 +1,6 @@
 package pl.edu.pwr.app;
 
-import pl.edu.pwr.app.modules.ClassManager;
+import pl.edu.pwr.app.loaders.ClassManager;
 import pl.edu.pwr.service.CustomStatusListener;
 import pl.edu.pwr.service.ProcessManager;
 import pl.edu.pwr.service.Processor;
@@ -18,25 +18,22 @@ import java.util.concurrent.Executors;
 
 public class ProcessorsView {
     private JFrame frame;
-    private CustomClassLoader customClassLoader;
     private ClassManager classManager;
-    private List<Processor> processorInstances;
+    private final List<Processor> processorInstances;
     private JList<Processor> objectsList;
     private JLabel infoLabel;
     private JLabel idLabel;
     private JLabel statusLabel;
     private JLabel resultLabel;
-    private JButton newTaskButton;
-    private CustomStatusListener statusListener = new CustomStatusListener();
-    private HashMap<Integer, String> statusMap = new HashMap<>();
-    private File selectedDirectory;
-    private String packageName;
+    private final CustomStatusListener statusListener = new CustomStatusListener();
+    private final HashMap<Integer, String> statusMap = new HashMap<>();
+    private final File selectedDirectory;
+    private final String packageName;
     private JTextField taskField;
 
     public ProcessorsView(File selectedDirectory, String packageName) {
         this.selectedDirectory = selectedDirectory;
         this.packageName = packageName;
-//        this.customClassLoader = new CustomClassLoader(packageName, selectedDirectory.toPath());
         this.classManager = new ClassManager(packageName, selectedDirectory.toPath());
         this.processorInstances = new ArrayList<>();
 
@@ -47,7 +44,7 @@ public class ProcessorsView {
 
     private void initializeFrame(String title) {
         frame = new JFrame("Przegląd obiektów - " + title);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(800, 600);
         frame.setLocationRelativeTo(null);
     }
@@ -65,20 +62,15 @@ public class ProcessorsView {
 
     private void loadProcessors() {
         try {
-            try {
-//                List<Class<Processor>> processorClasses = customClassLoader.loadProcessorsFromFile();
-                List<Class<Processor>> processorClasses = classManager.getProcessors();
-                processorInstances.clear();
-                statusListener.clearStatusMap();
+            List<Class<Processor>> processorClasses = classManager.getProcessors();
+            processorInstances.clear();
+            statusListener.clearStatusMap();
 
-                for (Class<Processor> processorClass : processorClasses) {
-                    Processor instance = processorClass.getDeclaredConstructor().newInstance();
-                    processorInstances.add(instance);
-                }
-                refreshListModel();
-            }catch(NoClassDefFoundError e){
-                openMainFrame("Error: couldn't find package  '" + packageName + "' in directory.");
+            for (Class<Processor> processorClass : processorClasses) {
+                Processor instance = processorClass.getDeclaredConstructor().newInstance();
+                processorInstances.add(instance);
             }
+            refreshListModel();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(frame, "Failed to load processors: " + e.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
@@ -124,7 +116,7 @@ public class ProcessorsView {
         JLabel taskLabel = new JLabel("Enter task:");
         taskField = new JTextField();
 
-        newTaskButton = new JButton("New task");
+        JButton newTaskButton = new JButton("New task");
         newTaskButton.addActionListener(e ->
                 startNewTask()
         );
@@ -218,7 +210,7 @@ public class ProcessorsView {
     }
 
     private void startNewTask() {
-        if(taskField.getText()!=null) {
+        if(taskField.getText() != null && !taskField.getText().trim().isEmpty()) {
             Processor processor = objectsList.getSelectedValue();
             processor.submitTask(taskField.getText(), statusListener);
             statusMap.put(ProcessManager.getInstance().getId(processor), "RUNNING");
@@ -238,10 +230,6 @@ public class ProcessorsView {
     }
 
     private void reloadProcessors() {
-//        this.customClassLoader = new CustomClassLoader(
-//                packageName,
-//                selectedDirectory.toPath()
-//        );
         this.classManager = new ClassManager(
                 packageName,
                 selectedDirectory.toPath()
@@ -259,9 +247,9 @@ public class ProcessorsView {
     private void unloadProcessors() {
         statusListener.clearStatusMap();
         ProcessManager.getInstance().clearRunningProcessors();
-        loadProcessors();
         statusMap.clear();
         classManager = null;
+        processorInstances.clear();
         System.gc();
         openMainFrame("You've unloaded classes.");
     }
