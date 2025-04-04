@@ -30,3 +30,5 @@ target/
 *.cmd
 /mvnw
 *.jar
+*.csv
+
