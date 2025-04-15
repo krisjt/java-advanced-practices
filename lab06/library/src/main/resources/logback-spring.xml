@@ -1,0 +1,33 @@
+<configuration>
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+    <logger name="monitLogger" level="INFO">
+        <appender-ref ref="MONIT_LOG"/>
+    </logger>
+
+    <logger name="escalatedMonitLogger" level="INFO">
+        <appender-ref ref="ESCALATED_LOG"/>
+    </logger>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %highlight(%-5level) %cyan(%logger{36}) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="MONIT_LOG" class="ch.qos.logback.core.FileAppender">
+        <file>logs/monit.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ESCALATED_LOG" class="ch.qos.logback.core.FileAppender">
+        <file>logs/escalatedMonit.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+</configuration>
