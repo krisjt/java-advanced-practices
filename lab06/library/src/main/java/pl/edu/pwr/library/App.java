@@ -1,8 +1,8 @@
 package pl.edu.pwr.library;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import pl.edu.pwr.library.models.*;
-import pl.edu.pwr.library.service.*;
+import pl.edu.pwr.library.application.service.*;
+import pl.edu.pwr.library.database.models.*;
 
 import java.time.Clock;
 import java.time.LocalDate;
@@ -13,7 +13,7 @@ import java.util.Objects;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
-import static pl.edu.pwr.library.models.Type.BASIC;
+import static pl.edu.pwr.library.database.models.Type.BASIC;
 
 @SpringBootApplication
 public class App {

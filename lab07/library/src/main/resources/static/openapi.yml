@@ -1,0 +1,581 @@
+openapi: 3.0.3
+info:
+  title: University Service 1.0.1
+  description: |-
+    Service subscription application.
+  termsOfService: https://www.example.org/terms/
+  contact:
+    email: helpdesk@example.org
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Find out more about fishing
+  url: https://example.org
+security:
+  - api_key: []
+paths:
+    /abonament/find-all:
+      get:
+        tags:
+          - Abonament
+        summary: Find all abonaments
+        description: Retrieve all abonaments
+        operationId: getAllAbonaments
+        responses:
+          '200':
+            description: Successful operation
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/AbonamentDTO'
+          '404':
+            description: No abonaments found
+
+    /abonament/find-by-id:
+      get:
+        tags:
+          - Abonament
+        summary: Find abonament by ID
+        description: Retrieve abonament by its ID
+        operationId: getAbonamentById
+        parameters:
+          - name: id
+            in: query
+            required: true
+            description: ID of the abonament
+            schema:
+              type: integer
+        responses:
+          '200':
+            description: Successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/AbonamentDTO'
+          '404':
+            description: Abonament not found
+
+    /abonament/add:
+      post:
+        tags:
+          - Abonament
+        summary: Add a new abonament
+        description: Create a new abonament
+        operationId: addAbonament
+        requestBody:
+          description: Abonament payload to add
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AbonamentPayload'
+        responses:
+          '200':
+            description: Abonament created
+            content:
+              application/json:
+                schema:
+                  type: string
+          '400':
+            description: Invalid input
+
+    /client/find-all:
+      get:
+        tags:
+          - Client
+        summary: Get all clients
+        description: Show all clients
+        operationId: findAll
+        responses:
+          '200':
+            description: Successful operation
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ClientDTO'
+          '404':
+            description: No clients found
+    /client/find-by-id:
+      get:
+        tags:
+          - Client
+        summary: Find client by ID
+        description: Retrieve client by its ID
+        operationId: findByID
+        parameters:
+          - name: id
+            in: query
+            required: true
+            description: ID of the client
+            schema:
+              type: integer
+        responses:
+          '200':
+            description: Successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ClientDTO'
+          '404':
+            description: Client not found
+    /client/modify:
+        put:
+          tags:
+            - Client
+          summary: Modify client
+          description: Modify client
+          operationId: modifyClient
+          requestBody:
+            description: Client payload to add
+            required: true
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ClientPayload'
+          responses:
+            '200':
+              description: Client modified
+              content:
+                application/json:
+                  schema:
+                    type: string
+            '400':
+              description: Invalid input
+    /client/add:
+      post:
+        tags:
+          - Client
+        summary: Add client
+        description: Add client
+        operationId: addClient
+        requestBody:
+          description: Client dto to add
+          required: true
+          content:
+             application/json:
+              schema:
+                $ref: '#/components/schemas/ClientDTO'
+        responses:
+              '200':
+                description: Client added
+                content:
+                  application/json:
+                    schema:
+                      type: string
+              '400':
+                description: Invalid input
+
+    /payment/find-all:
+      get:
+        tags:
+          - Payment
+        summary: Find all payments
+        description: Show all payments
+        operationId: findAll
+        responses:
+          '200':
+            description: Payments retrieved
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#components/schemas/PaymentDTO'
+
+    /payment/find-all-by-receivable:
+      get:
+        tags:
+          - Payment
+        summary: Find all payments by receivable
+        description: Show all payments related to receivable
+        operationId: findAll
+        parameters:
+          - name: id
+            in: query
+            required: true
+            description: ID of receivable
+            schema:
+              type: integer
+        responses:
+          '200':
+            description: Payments retrieved
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#components/schemas/PaymentDTO'
+
+    /payment/find-by-id:
+      get:
+        tags:
+          - Payment
+        summary: Find payment by ID
+        description: Retrieve payment by its ID
+        operationId: findByID
+        parameters:
+          - name: id
+            in: query
+            required: true
+            description: ID of payment
+            schema:
+              type: integer
+        responses:
+          '200':
+            description: Successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/PaymentDTO'
+          '404':
+            description: Payment not found
+
+    /payment/modify:
+      put:
+        tags:
+          - Payment
+        summary: Modify payment
+        description: Modify payment
+        operationId: modifyPayment
+        requestBody:
+          description: Payment payload to add
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentPayload'
+        responses:
+          '200':
+            description: Payment modified
+            content:
+              application/json:
+                schema:
+                  type: string
+          '400':
+            description: Invalid input
+
+    /payment/add:
+      post:
+        tags:
+          - Payment
+        summary: Add payment
+        description: Add payment
+        operationId: addPayment
+        requestBody:
+          description: Payment payload to add
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentPayload'
+        responses:
+          '200':
+            description: Payment added
+            content:
+              application/json:
+                schema:
+                  type: string
+          '400':
+            description: Invalid input
+
+    /receivable/find-all:
+      get:
+        tags:
+          - Receivable
+        summary: Find all receivables
+        description: Show all receivables
+        operationId: findAll
+        responses:
+          '200':
+            description: Receivables retrieved
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#components/schemas/ReceivableDTO'
+
+    /receivable/find-by-id:
+      get:
+        tags:
+          - Receivable
+        summary: Find receivable by ID
+        description: Retrieve receivable by its ID
+        operationId: findByID
+        parameters:
+          - name: id
+            in: query
+            required: true
+            description: ID of receivable
+            schema:
+              type: integer
+        responses:
+          '200':
+            description: Successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ReceivableDTO'
+          '404':
+            description: Receivable not found
+
+    /price-list/find-all:
+      get:
+        tags:
+          - Price List
+        summary: Get price list
+        description: Show price list
+        operationId: findAll
+        responses:
+          '200':
+            description: Price list retrieved
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#components/schemas/PriceListDTO'
+          '404':
+            description: Price list not found
+
+    /price-list/find-all-by-active:
+      get:
+        tags:
+          - Price List
+        summary: Get price list
+        description: Show price list
+        operationId: findAll
+        parameters:
+          - name: active
+            in: query
+            required: true
+            description: Is the price active
+            schema:
+              type: boolean
+        responses:
+          '200':
+            description: Price list retrieved
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#components/schemas/PriceListDTO'
+          '404':
+            description: Price list not found
+
+    /price-list/set-price:
+      put:
+        tags:
+          - Price List
+        summary: Set price
+        description: Set price
+        operationId: setPrice
+        requestBody:
+          description: Price list payload to add
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceListPayload'
+        responses:
+          '200':
+            description: Price set
+          '404':
+            description: Price not set
+
+    /subaccount/find-all:
+      get:
+        tags:
+          - Subaccount
+        summary: Get all subaccounts
+        description: Show subaccount
+        operationId: findAll
+        responses:
+          '200':
+            description: Subaccounts retrieved
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#components/schemas/SubaccountDTO'
+          '404':
+            description: Subaccounts not found
+
+    /subaccount/modify:
+      put:
+        tags:
+          - Subaccount
+        summary: Modify subaccount
+        description: Modify subaccount
+        operationId: modifySubaccount
+        parameters:
+          - name: id
+            in: query
+            required: true
+            description: id of subaccount
+            schema:
+              type: integer
+        requestBody:
+          description: Subaccount payload to add
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubaccountPayload'
+        responses:
+          '200':
+            description: Subaccount modified
+          '404':
+            description: Subaccount not modified
+
+    /subaccount/add:
+      post:
+        tags:
+          - Subaccount
+        summary: Add subaccount
+        description: Add subaccount
+        operationId: addSubaccount
+        parameters:
+          - name: id
+            in: query
+            required: true
+            description: id of abonament
+            schema:
+              type: integer
+        requestBody:
+          description: Subaccount payload to add
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubaccountPayload'
+        responses:
+          '200':
+            description: Subaccount added
+          '404':
+            description: Subaccount not added
+
+
+
+
+
+components:
+  schemas:
+    Type:
+      type: string
+      description: "Abonament type"
+      enum:
+        - BASIC
+        - PREMIUM
+
+    ClientDTO:
+      type: object
+      properties:
+        name:
+          type: string
+        surname:
+          type: string
+
+    AbonamentDTO:
+      type: object
+      properties:
+        abonamentType:
+          $ref: '#/components/schemas/Type'
+        client:
+          $ref: '#/components/schemas/ClientDTO'
+
+    AbonamentPayload:
+      type: object
+      properties:
+        clientID:
+          type: integer
+        type:
+          $ref: '#/components/schemas/Type'
+
+    ClientPayload:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        surname:
+          type: string
+
+    PaymentDTO:
+      type: object
+      properties:
+        price:
+          type: number
+        payday:
+          type: string
+          format: date
+        receivable:
+          $ref: '#/components/schemas/ReceivableDTO'
+
+    ReceivableDTO:
+      type: object
+      properties:
+        payed:
+          type: boolean
+        alreadyPayed:
+          type: number
+        price:
+          type: number
+        payday:
+          type: string
+          format: date
+        abonamentDTO:
+          $ref: '#/components/schemas/AbonamentDTO'
+
+    PaymentPayload:
+      type: object
+      properties:
+        id:
+          type: integer
+        price:
+          type: number
+
+    PriceListDTO:
+      type: object
+      properties:
+        active:
+          type: boolean
+        price:
+          type: number
+        type:
+          $ref: '#/components/schemas/Type'
+
+    PriceListPayload:
+      type: object
+      properties:
+        abonamentType:
+          $ref: '#/components/schemas/Type'
+        price:
+          type: number
+
+    SubaccountDTO:
+      type: object
+      properties:
+        active:
+          type: boolean
+        login:
+          type: string
+        abonament:
+          $ref: '#/components/schemas/AbonamentDTO'
+
+    SubaccountPayload:
+      type: object
+      properties:
+        login:
+          type: string
+        password:
+          type: string
