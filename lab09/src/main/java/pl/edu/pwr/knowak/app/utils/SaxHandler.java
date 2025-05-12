@@ -1,11 +1,11 @@
-package pl.edu.pwr.knowak.jaxp;
+package pl.edu.pwr.knowak.app.utils;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-import pl.edu.pwr.knowak.jaxb.models.BabyName;
-import pl.edu.pwr.knowak.jaxb.models.Response;
-import pl.edu.pwr.knowak.jaxb.models.Row;
+import pl.edu.pwr.knowak.app.models.BabyName;
+import pl.edu.pwr.knowak.app.models.Response;
+import pl.edu.pwr.knowak.app.models.Row;
 
 import java.util.ArrayList;
 import java.util.List;

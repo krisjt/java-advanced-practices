@@ -9,25 +9,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-class SaxParser implements ActionListener {
+class SaxAction implements ActionListener {
 
     private JTextField xmlPathField;
-    private XsltViewer xsltViewer;
-    private JTextArea resultPane;
+    private XmlViewer xmlViewer;
+    private JEditorPane resultPane;
     private JaxpParser jaxpParser = new JaxpParser();
 
-    public SaxParser(JTextField xmlPathField, XsltViewer xsltViewer, JTextArea resultPane) {
+    public SaxAction(JTextField xmlPathField, XmlViewer xmlViewer, JEditorPane resultPane) {
         this.xmlPathField = xmlPathField;
-        this.xsltViewer = xsltViewer;
+        this.xmlViewer = xmlViewer;
         this.resultPane = resultPane;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String xmlPath = xmlPathField.getText();
+        resultPane.setContentType("text/plain");
 
         if (xmlPath.isEmpty()) {
-            JOptionPane.showMessageDialog(xsltViewer,
+            JOptionPane.showMessageDialog(xmlViewer,
                     "Please select XML file",
                     "Error", JOptionPane.ERROR_MESSAGE);
             return;

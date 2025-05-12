@@ -1,4 +1,4 @@
-package pl.edu.pwr.knowak.jaxb.models;
+package pl.edu.pwr.knowak.app.models;
 
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;

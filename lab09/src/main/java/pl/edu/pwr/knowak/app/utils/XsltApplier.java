@@ -1,4 +1,4 @@
-package pl.edu.pwr.knowak.xslt;
+package pl.edu.pwr.knowak.app.utils;
 
 import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
@@ -6,7 +6,7 @@ import javax.xml.transform.stream.StreamSource;
 import java.io.File;
 import java.io.StringWriter;
 
-public class StyleApplier {
+public class XsltApplier {
 
     public String applyXslt(String xmlPath, String xsltPath) {
         try {

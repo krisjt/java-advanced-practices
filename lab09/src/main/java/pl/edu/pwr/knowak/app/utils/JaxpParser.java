@@ -1,46 +1,17 @@
-package pl.edu.pwr.knowak.jaxp;
+package pl.edu.pwr.knowak.app.utils;
 
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import pl.edu.pwr.knowak.jaxb.models.Response;
+import pl.edu.pwr.knowak.app.models.Response;
 
 import javax.xml.parsers.*;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
-import java.io.StringWriter;
 
-public class Parser {
-    public static void main(String[] args) {
-        try {
-
-//            SAXParserFactory saxFactory = SAXParserFactory.newInstance();
-//            SAXParser saxParser = saxFactory.newSAXParser();
-//            SaxHandler saxHandler = new SaxHandler();
-//
-//            saxParser.parse("data.xml", saxHandler);
-//
-//            Response result = saxHandler.getResponse();
-//            System.out.println(result.getRow());
-//
-//            Row row = result.getRow();
-//            List<BabyName> babyNames = row.getRows();
-//
-//            System.out.println(babyNames);
-            Parser parser = new Parser();
-            System.out.println(parser.parseWithDOM("/Users/krystynanowak/Desktop/Studia/Semestr6/JavaTechnikiZaawansowane/272890_javatz_2025/lab09/data.xml"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+public class JaxpParser {
     public String parseWithDOM(String filename) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
@@ -80,6 +51,7 @@ public class Parser {
     }
 
     public Response parseWithSax(String filename) throws IOException, SAXException, ParserConfigurationException {
+
         SAXParserFactory saxFactory = SAXParserFactory.newInstance();
         SAXParser saxParser = saxFactory.newSAXParser();
         SaxHandler saxHandler = new SaxHandler();

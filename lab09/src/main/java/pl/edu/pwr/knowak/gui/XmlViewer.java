@@ -1,23 +1,20 @@
 package pl.edu.pwr.knowak.gui;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 
-public class XsltViewer extends JFrame {
+public class XmlViewer extends JFrame {
 
     private JEditorPane resultPane;
-    private JTextArea resultJAX;
     private JTextField xmlPathField;
     private JTextField xsltPathField;
+    private static final String XSLT_PROJECTROOT_PATH = "/src/main/java/pl/edu/pwr/knowak/app/xslt";
 
-    public XsltViewer() {
-        setTitle("XSLT Viewer");
-        setSize(1200, 800);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public XmlViewer() {
+        setTitle("XML Viewer");
+        setSize(800, 600);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
         initComponents();
@@ -44,7 +41,7 @@ public class XsltViewer extends JFrame {
         gbc.gridx = 2;
         gbc.weightx = 0.0;
         JButton xmlBrowseButton = new JButton("Browse...");
-        xmlBrowseButton.addActionListener(new BrowseAction(xmlPathField, "Select XML File", "xml"));
+        xmlBrowseButton.addActionListener(e-> chooseFile(xmlPathField,"Select XML File",""));
         topPanel.add(xmlBrowseButton, gbc);
 
         gbc.gridx = 0;
@@ -59,41 +56,27 @@ public class XsltViewer extends JFrame {
         gbc.gridx = 2;
         gbc.weightx = 0.0;
         JButton xsltBrowseButton = new JButton("Browse...");
-        xsltBrowseButton.addActionListener(new BrowseAction(xsltPathField, "Select XSLT File", "xslt"));
+        xsltBrowseButton.addActionListener(e-> chooseFile(xsltPathField,"Select XSLT File", XSLT_PROJECTROOT_PATH));
         topPanel.add(xsltBrowseButton, gbc);
-
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        splitPane.setDividerLocation(0.5); // Dzieli obszar na pół
-        splitPane.setResizeWeight(0.5);    // Zachowuje proporcje przy zmianie rozmiaru okna
-
-// Lewy panel (resultPane)
         resultPane = new JEditorPane();
         resultPane.setEditable(false);
         resultPane.setContentType("text/html");
         JScrollPane leftScrollPane = new JScrollPane(resultPane);
-        splitPane.setLeftComponent(leftScrollPane);
 
-// Prawy panel (resultJAX)
-        resultJAX = new JTextArea();
-        resultJAX.setEditable(false);
-        JScrollPane rightScrollPane = new JScrollPane(resultJAX);
-        splitPane.setRightComponent(rightScrollPane);
-
-// Dodaj splitPane do głównego panelu
-        mainPanel.add(splitPane, BorderLayout.CENTER);
+        mainPanel.add(leftScrollPane, BorderLayout.CENTER);
 
         JPanel parserButtonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
         JButton domButton = new JButton("DOM");
-        domButton.addActionListener(new DomAction(xmlPathField, this, resultJAX));
+        domButton.addActionListener(new DomAction(xmlPathField, this, resultPane));
         parserButtonsPanel.add(domButton);
 
         JButton saxButton = new JButton("SAX");
-        saxButton.addActionListener(new SaxAction(xmlPathField, this, resultJAX));
+        saxButton.addActionListener(new SaxAction(xmlPathField, this, resultPane));
         parserButtonsPanel.add(saxButton);
 
         JButton jaxbButton = new JButton("JAXB");
-        jaxbButton.addActionListener(new JaxbAction(xmlPathField, this, resultJAX));
+        jaxbButton.addActionListener(new JaxbAction(xmlPathField, this, resultPane));
         parserButtonsPanel.add(jaxbButton);
 
         JButton transformButton = new JButton("Transform");
@@ -110,36 +93,20 @@ public class XsltViewer extends JFrame {
         add(mainPanel);
     }
 
-    private class BrowseAction implements ActionListener {
-        private JTextField targetField;
-        private String title;
-        private String extension;
-
-        public BrowseAction(JTextField targetField, String title, String extension) {
-            this.targetField = targetField;
-            this.title = title;
-            this.extension = extension;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setDialogTitle(title);
-            fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-            fileChooser.setFileFilter(new FileNameExtensionFilter(
-                    extension.toUpperCase() + " Files (*." + extension + ")", extension));
-
-            int returnValue = fileChooser.showOpenDialog(XsltViewer.this);
-            if (returnValue == JFileChooser.APPROVE_OPTION) {
-                File selectedFile = fileChooser.getSelectedFile();
-                targetField.setText(selectedFile.getAbsolutePath());
-            }
+    private void chooseFile(JTextField targetField, String title, String path) {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle(title);
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir"),path));
+        int returnValue = fileChooser.showOpenDialog(XmlViewer.this);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            targetField.setText(selectedFile.getAbsolutePath());
         }
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            XsltViewer viewer = new XsltViewer();
+            XmlViewer viewer = new XmlViewer();
             viewer.setVisible(true);
         });
     }
