@@ -1,0 +1,8 @@
+/.idea
+/src/test
+*.jks
+*.txt
+text.txt
+*.key
+/out
+*/target
