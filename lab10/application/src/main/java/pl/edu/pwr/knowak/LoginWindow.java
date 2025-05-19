@@ -23,7 +23,7 @@ public class LoginWindow {
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // marginesy
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JPanel aliasPanel = new JPanel(new BorderLayout());
         JLabel aliasLabel = new JLabel("Alias:");
