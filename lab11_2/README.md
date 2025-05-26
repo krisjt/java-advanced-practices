@@ -1,7 +1,7 @@
 # Raport z Zajęć
 
 ## Struktura projektu
-Projekt został podzielony na foldery odpowiadające różnym wersjom JDK:
+Moduł library został podzielony na foldery odpowiadające różnym wersjom JDK:
 - `jdk9` - wersja dla Java 9
 - `jdk11` - wersja dla Java 11
 - `jdk17` - wersja dla Java 17
