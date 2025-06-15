@@ -4,7 +4,7 @@
 
 W celu utworzenia jara wykorzystany został plugin maven shade. Umożliwia on tworzenie, tzw. FAT jarów, zawierających klasy wraz z ich zależnościami. 
 
-```agsl
+```xml
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -28,10 +28,16 @@ W celu utworzenia jara wykorzystany został plugin maven shade. Umożliwia on tw
             </plugin>
 ```
 
+Następnie pliki wykonywalny tworzony był komendą:
+```shell
+mvn clean compile package
+```
+
+
 ## Włączanie jara
 W celu uruchomienia programu konieczne było pobranie JavaFX SDK ze strony [ GluaonHQ ]("https://gluonhq.com/products/javafx/"). Następnie w trakcie uruchamiania jara podawana jest ścieżka do pobranego SDK.
 
 
-```agsl
+```shell
 java --module-path ~/javafx-sdk-17.0.15/lib --add-modules javafx.controls,javafx.fxml -Djavafx.allowjs=true -jar lab13-1.0-SNAPSHOT.jar
 ```
