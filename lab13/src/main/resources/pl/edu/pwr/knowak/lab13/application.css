@@ -1,0 +1,58 @@
+.root {
+    -fx-background-color: linear-gradient(to bottom right, #ffb347, #ffcccb);
+    -fx-alignment: center;
+    -fx-padding: 20;
+}
+
+#inputLbl {
+    -fx-font-size: 38px;
+    -fx-font-family: "Times New Roman", Times, serif;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+}
+
+#helloLabel {
+    -fx-font-size: 36px;
+    -fx-font-family: "Times New Roman", Times, serif;
+    -fx-font-style: italic;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+}
+
+#motivationalText {
+    -fx-font-size: 32px;
+    -fx-font-family: "Times New Roman", Times, serif;
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+    -fx-padding: 10 0;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+}
+
+.button {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-text-fill: white;
+    -fx-font-size: 28px;
+    -fx-font-family: "Times New Roman", Times, serif;
+    -fx-border-width: 0;
+    -fx-background-radius: 8;
+    -fx-padding: 10 25;
+}
+
+.button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.4);
+    -fx-text-fill: white;
+}
+
+.button:pressed {
+    -fx-background-color: rgba(255, 255, 255, 0.6);
+    -fx-text-fill: #f0f0f0;
+}

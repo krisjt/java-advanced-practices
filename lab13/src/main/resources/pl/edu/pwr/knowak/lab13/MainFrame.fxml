@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?language javascript?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="vbox" prefHeight="600.0"
+      prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1"
+      xmlns="http://javafx.com/javafx/2.2">
+
+    <fx:script>
+        var LocalTime = Java.type("java.time.LocalTime");
+        var DateTimeFormatter = Java.type("java.time.format.DateTimeFormatter");
+        var Timeline = Java.type("javafx.animation.Timeline");
+        var KeyFrame = Java.type("javafx.animation.KeyFrame");
+        var Duration = Java.type("javafx.util.Duration");
+        var Platform = Java.type("javafx.application.Platform");
+        var FileReader = Java.type("java.io.FileReader");
+        var BufferedReader = Java.type("java.io.BufferedReader");
+        var Random = Java.type("java.util.Random");
+        var System = Java.type("java.lang.System");
+
+        var morningMotivationTexts = [];
+        var afternoonMotivationTexts = [];
+        var eveningMotivationTexts = [];
+
+        var inputLbl;
+        var motivationalText;
+        var helloLabel;
+        var currentTime = LocalTime.now();
+        var basePath = System.getProperty("user.dir");
+
+        function initialize() {
+            inputLbl = vbox.lookup("#inputLbl");
+            motivationalText = vbox.lookup("#motivationalText");
+            helloLabel = vbox.lookup("#helloLabel");
+
+            if (!inputLbl || !motivationalText || !helloLabel) {
+                System.err.println("Error: Could not find UI elements");
+                return;
+            }
+
+            getFiles();
+            startClock();
+            showRandomMotivationalText();
+        }
+
+        function getFiles() {
+            var File = Java.type("java.io.File");
+            var morningFile = new File(basePath + "/src/main/resources/pl/edu/pwr/knowak/lab13/templates/morning_texts.txt");
+            var afternoonFile = new File(basePath + "/src/main/resources/pl/edu/pwr/knowak/lab13/templates/afternoon_texts.txt");
+            var eveningFile = new File(basePath + "/src/main/resources/pl/edu/pwr/knowak/lab13/templates/evening_texts.txt");
+
+            readFile(morningFile, morningMotivationTexts);
+            readFile(afternoonFile, afternoonMotivationTexts);
+            readFile(eveningFile, eveningMotivationTexts);
+        }
+
+        function readFile(file, array) {
+            var br = null;
+            try {
+                br = new BufferedReader(new FileReader(file));
+                var line;
+                while ((line = br.readLine()) != null) {
+                    array.push(line);
+                }
+            } catch (e) {
+                System.err.println("Error reading file: " + e);
+            } finally {
+                if (br !== null) {
+                    try {
+                        br.close();
+                    } catch (e) {
+                        System.err.println("Error closing reader: " + e);
+                    }
+                }
+            }
+        }
+
+
+        function showRandomMotivationalText() {
+            updateTime();
+            var arr;
+            var noon = LocalTime.parse("12:00");
+            var afternoon = LocalTime.parse("18:00");
+            if (currentTime.isBefore(noon)) {
+                arr = morningMotivationTexts;
+                helloLabel.setText("Good morning!");
+            }
+            else {
+                if(currentTime.isBefore(afternoon)){
+                    arr = afternoonMotivationTexts;
+                    helloLabel.setText("Good afternoon!");
+                }
+                if(currentTime.isAfter(afternoon)){
+                    arr = eveningMotivationTexts;
+                    helloLabel.setText("Good evening!");
+                }
+            }
+
+            if (arr.length > 0) {
+                var random = new Random();
+                var randomIndex = random.nextInt(arr.length);
+                motivationalText.setText(arr[randomIndex]);
+            }
+        }
+
+        function updateTime() {
+            currentTime = LocalTime.now();
+            // currentTime = LocalTime.now().minusHours(10);
+            var formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+            inputLbl.setText(currentTime.format(formatter));
+        }
+
+        function startClock() {
+            updateTime();
+
+            var timeline = new Timeline(new KeyFrame(Duration.seconds(1), function (e) {
+                updateTime();
+            }));
+            timeline.setCycleCount(Timeline.INDEFINITE);
+            timeline.play();
+        }
+
+        Platform.runLater(function () {
+            initialize();
+        });
+    </fx:script>
+
+    <children>
+        <Label fx:id="inputLbl" cache="true"
+               cacheHint="SCALE" prefHeight="30.0" prefWidth="200.0"
+               text="Loading..." />
+        <Label fx:id="helloLabel" cache="true"
+               cacheHint="SCALE" prefHeight="30.0" prefWidth="800.0"
+               text="Hello!" />
+        <TextField fx:id="motivationalText" cache="true" editable="false"
+               cacheHint="SCALE" prefHeight="30.0" prefWidth="800.0"
+               text="--motivational text--"/>
+        <Button text="Reload" onAction="showRandomMotivationalText()"/>
+
+    </children>
+</VBox>
