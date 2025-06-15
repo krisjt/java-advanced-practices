@@ -6,7 +6,12 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainFrame extends Application {
     public static void main(String[] args) {
@@ -25,7 +30,21 @@ public class MainFrame extends Application {
         scene.getStylesheets().add(getClass().getResource(cssPath).toExternalForm());
 
         stage.setScene(scene);
-        stage.setTitle("A FXML Example without any Controller");
+        stage.setTitle("Motivational quotes");
         stage.show();
+    }
+
+    public static List<String> loadTextsFromResource(String resourcePath) {
+        List<String> texts = new ArrayList<>();
+        try (InputStream is = MainFrame.class.getResourceAsStream(resourcePath);
+             BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                texts.add(line);
+            }
+        } catch (IOException | NullPointerException e) {
+            System.err.println("Error loading resource: " + resourcePath);
+        }
+        return texts;
     }
 }

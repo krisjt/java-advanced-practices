@@ -46,6 +46,9 @@
 
         function getFiles() {
             var File = Java.type("java.io.File");
+            var MainFrame = Java.type("pl.edu.pwr.knowak.lab13.MainFrame");
+            var ArrayList = Java.type("java.util.ArrayList");
+
             var morningFile = new File(basePath + "/src/main/resources/pl/edu/pwr/knowak/lab13/templates/morning_texts.txt");
             var afternoonFile = new File(basePath + "/src/main/resources/pl/edu/pwr/knowak/lab13/templates/afternoon_texts.txt");
             var eveningFile = new File(basePath + "/src/main/resources/pl/edu/pwr/knowak/lab13/templates/evening_texts.txt");
@@ -53,6 +56,19 @@
             readFile(morningFile, morningMotivationTexts);
             readFile(afternoonFile, afternoonMotivationTexts);
             readFile(eveningFile, eveningMotivationTexts);
+
+            if (morningMotivationTexts.length === 0) {
+                var morningList = MainFrame.loadTextsFromResource("/pl/edu/pwr/knowak/lab13/templates/morning_texts.txt");
+                morningMotivationTexts = morningList.toArray();
+            }
+            if (afternoonMotivationTexts.length === 0) {
+                var afternoonList = MainFrame.loadTextsFromResource("/pl/edu/pwr/knowak/lab13/templates/afternoon_texts.txt");
+                afternoonMotivationTexts = afternoonList.toArray();
+            }
+            if (eveningMotivationTexts.length === 0) {
+                var eveningList = MainFrame.loadTextsFromResource("/pl/edu/pwr/knowak/lab13/templates/evening_texts.txt");
+                eveningMotivationTexts = eveningList.toArray();
+            }
         }
 
         function readFile(file, array) {
