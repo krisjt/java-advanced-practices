@@ -8,7 +8,7 @@
 
 - [x] **lab04** - **Class Loader** - aplikacja umożliwiająca zlecanie wykonania zadań instancjom klas ładowanym własnym ładowaczem klas.
 
-- [x] **lab05** - **SPI** - aplikacja z pozwalająca przeprowadzić analizę statystyczną wyników klasyfikacji zgromadzonych w tabelach niezgodności (confusion matrix), wykorzystując SPI zapewniono aplikacji możliwość załadowania klas implementujšcych zadany interfejs już po zbudowaniu samej aplikacji.  
+- [x] **lab05** & **lab05-standard** - **SPI** - aplikacja pozwalająca przeprowadzić analizę statystyczną wyników klasyfikacji zgromadzonych w tabelach niezgodności (confusion matrix), wykorzystując SPI zapewniono aplikacji możliwość załadowania klas implementujšcych zadany interfejs już po zbudowaniu samej aplikacji. Stworzono dwie wersje apliakcji standardową - **lab05-standard** oraz modularną **lab05**. 
 
 - [x] **lab06** - **ORM** - aplikacja służąca do zarządzania usługami oferowanymi klientom firmy dostarczającej telewizję internetową. 
 
