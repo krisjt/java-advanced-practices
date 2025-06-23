@@ -8,7 +8,7 @@ import java.text.ChoiceFormat;
 import java.text.MessageFormat;
 import java.util.*;
 
-public class GuessingQuestion {
+public class QuestionManager {
 
     private final Random random = new Random();
     private final AuthorsReader authorsReader = new AuthorsReader();
@@ -18,7 +18,7 @@ public class GuessingQuestion {
     private final Locale locale;
     private final ResourceBundle rb;
     private final BookReader bookReader = new BookReader();
-    public GuessingQuestion(Language lang) {
+    public QuestionManager(Language lang) {
         locale = new Locale(lang.toString().toLowerCase(),lang.toString());
         rb = ResourceBundle.getBundle("Question",locale);
 //        rb = ResourceBundle.getBundle("pl.edu.pwr.resource.Question",locale);
@@ -48,8 +48,6 @@ public class GuessingQuestion {
             case 2 -> "Dramat";
             default -> throw new IllegalStateException("Unexpected value");
         };
-
-        System.out.println(genre);
 
         bookList.removeIf(book -> !Objects.equals(book.kind, genre));
 

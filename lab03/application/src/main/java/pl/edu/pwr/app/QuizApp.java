@@ -1,16 +1,15 @@
 package pl.edu.pwr.app;
 
 import pl.edu.pwr.apiconnetion.models.Question;
-import pl.edu.pwr.service.GuessingQuestion;
+import pl.edu.pwr.service.QuestionManager;
 import pl.edu.pwr.service.Language;
+import pl.edu.pwr.service.Subject;
 
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.*;
 import java.text.MessageFormat;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Random;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class QuizApp extends JFrame {
     private JPanel cardPanel;
@@ -22,7 +21,7 @@ public class QuizApp extends JFrame {
     private JLabel summaryLabel;
     private JPanel answersPanel;
     private Question currentQuestion;
-    private GuessingQuestion game;
+    private QuestionManager game;
     private Random random = new Random();
     private ResourceBundle rb;
     private Locale locale;
@@ -53,7 +52,7 @@ public class QuizApp extends JFrame {
     }
 
     private void initializeLanguage() {
-        game = new GuessingQuestion(language);
+        game = new QuestionManager(language);
         locale = new Locale(language.toString().toLowerCase(), language.toString());
         rb = ResourceBundle.getBundle("App", locale);
 //        rb = ResourceBundle.getBundle("pl.edu.pwr.app.resource.App", locale);
@@ -239,24 +238,15 @@ public class QuizApp extends JFrame {
     }
 
     private void loadNextQuestion() {
-        int question = Math.abs(random.nextInt() % 4);
-//        Map<String,Boolean> map = new HashMap<>();
-//        map.put("true1",true);
-//        map.put("true2",true);
-//        map.put("false1",false);
-//        map.put("false2",false);
+        int question = Math.abs(random.nextInt() % 3);
         if (currentQuestionIndex == 0) currentQuestion = game.getNumberQuestion();
         else {
             switch (question) {
-//                case 0 -> currentQuestion = game.getQuestion(Subject.Author);
-//                case 1 -> currentQuestion = game.getQuestion(Subject.Kind);
-//                case 2 -> currentQuestion = game.getQuestion(Subject.Genre);
-                default -> currentQuestion = game.getQuestionThreeGaps();
-//                default -> currentQuestion = new Question("cos",map);
+                case 0 -> currentQuestion = game.getQuestion(Subject.Author);
+                case 1 -> currentQuestion = game.getQuestion(Subject.Kind);
+                default -> currentQuestion = game.getQuestion(Subject.Genre);
             }
         }
-
-        System.out.println(currentQuestion);
 
         String questionText = currentQuestion.questionContent();
         questionLabel.setText("<html><div style='width: 650px; text-align: center;'>" + questionText + "</div></html>");

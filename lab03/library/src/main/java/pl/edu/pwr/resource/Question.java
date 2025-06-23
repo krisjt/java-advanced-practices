@@ -9,7 +9,7 @@ public class Question extends ListResourceBundle {
                 {"guessAuthor", "Who is the author of the book titled \"{0}\"?"},
                 {"guessGenre", "What is the genre of the book \"{0}\"?"},
                 {"guessKind", "What is the kind of the book \"{0}\"?"},
-                {"matchKind", "Which of these titles: a)\"{0}\", b)\"{1}\", c)\"{2}\", d)\"{3}\" are {4}?"},
+                {"matchKind", "These titles: a)\"{0}\", b)\"{1}\", c)\"{2}\", d)\"{3}\" are {4}?"},
                 {"genre.epic", "epic"},
                 {"genre.lyric", "lyric"},
                 {"genre.drama", "drama"},
