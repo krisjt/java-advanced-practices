@@ -1,0 +1,31 @@
+stages:
+  - build
+  - test
+  - deploy
+
+maven_build:
+  stage: build
+  tags:
+    - maven
+  script:
+    - echo "Building project with Maven"
+    - mvn clean install
+
+maven_test:
+  stage: test
+  tags:
+    - maven
+  script:
+    - echo "Running tests with Maven"
+    - mvn test
+  artifacts:
+    paths:
+      - target/test-classes
+    when: always
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying project"
+  only:
+    - main
