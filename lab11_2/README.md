@@ -34,3 +34,13 @@ Wersja **JDK 17** wykorzystuje Pattern Matching dla instanceof. Dodatkowo wyświ
 --main-class pl.edu.pwr.knowak.LoginWindow \
 --type dmg
 `
+
+## Polecenie
+Bazując na kodzie stworzonym w trakcie poprzednich laboratoriów przygotuj:
+
+1. Wielowydaniowy jar (projekty poszczególnych wydań mają być modułowe - Java Platform Module System (JPMS)),
+2. Instalator aplikacji. Opis tego czym jest wielowydaniowy jar pojawi się na wykładzie. Towarzyszące mu materiały znaleźć można na stronie poświęconej kursowi. Instalator aplikacji może być wykonany dowolnym narzędziem. Ponadto dla ciekawych polecane jest sprawdzenie, jak działa narzędzie jpackage.
+
+Proszę zauważyć, że z uwagi na wprowadzenie systemów modułów nieco kłopotliwe jest generowanie wielowydaniowego jara zawierającego kod dla JDK8 oraz JDK9 i wyżej. Dlatego często wielowydaniowe jary są generowane tylko dla nowszych wersji JDK (JDK9 i wyżej).
+
+Oprócz źródeł kodu w gitlabowym repozytorium proszę również umieścić krótki raport z realizacji zadania.
